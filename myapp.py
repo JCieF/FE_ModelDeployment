@@ -31,23 +31,26 @@ def preprocess_input(text):
 # Define your Streamlit app
 def main():
     st.title('Text Classification App')
-    user_input = st.text_input('Enter text:')
+    user_input = st.text_input('Enter text or numbers:')
     
     if st.button('Predict'):
         if user_input.strip():  # Check if input is not empty
             try:
-                # Preprocess user input
-                processed_input = preprocess_input(user_input)
+                # Try converting input to float (or int) if numeric
+                data = float(user_input)  # Adjust to int() if expecting integer input
+                processed_input = np.array([data])  # Example: for a single number input
                 
                 # Make prediction
-                prediction = model.predict(processed_input)
+                prediction = model.predict(processed_input.reshape(1, -1))
                 
                 st.write(f'Prediction: {prediction[0]}')
                 
+            except ValueError:
+                st.error('Please enter valid numerical data.')
             except Exception as e:
                 st.error(f'Error: {e}')
         else:
-            st.warning('Please enter some text.')
+            st.warning('Please enter some text or numbers.')
 
 # Run the app
 if __name__ == '__main__':
