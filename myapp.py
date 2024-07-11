@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 
 # Load the model
-model = load_model(r"C:\Users\John Carlos Camarao\Desktop\Final-Exam_CAMARAO\finalExam.h5")
+model = load_model('model.h5')
 
 # Define your app
 def main():
