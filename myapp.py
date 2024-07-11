@@ -11,7 +11,22 @@ model = load_model(model_path)
 def preprocess_input(text):
     # Implement your preprocessing logic here
     # Example: Tokenization, padding for sequences
-    return np.array([text])  # Example: return a numpy array
+    max_sequence_length = 100  # Example: maximum sequence length expected by your model
+    vocab_size = 10000  # Example: vocabulary size
+    
+    # Tokenization (example using simple word splitting)
+    tokens = text.split()
+    
+    # Limit tokens to max_sequence_length
+    tokens = tokens[:max_sequence_length]
+    
+    # Convert tokens to indices or use other methods for encoding
+    # Example: use keras.preprocessing.text.Tokenizer for tokenization
+    
+    # Example: pad_sequences for padding sequences to a fixed length
+    padded_tokens = pad_sequences([tokens], maxlen=max_sequence_length, padding='post')
+    
+    return padded_tokens
 
 # Define your Streamlit app
 def main():
