@@ -1,26 +1,39 @@
 import streamlit as st
-from tensorflow.keras.models import load_model
 import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Load the model
-model = load_model('finalExam.keras')
+# Load the Keras model
+model_path = 'finalExam.keras'
+model = load_model(model_path)
 
-# Define your app
+# Function to preprocess user input
+def preprocess_input(text):
+    # Implement your preprocessing logic here
+    # Example: Tokenization, padding for sequences
+    return np.array([text])  # Example: return a numpy array
+
+# Define your Streamlit app
 def main():
-    st.title("My Streamlit App")
-    user_input = st.text_input("Enter some data:")
-
-    if st.button("Predict"):
-        if user_input.strip():  # Check if user_input is not empty or only whitespace
+    st.title('Text Classification App')
+    user_input = st.text_input('Enter text:')
+    
+    if st.button('Predict'):
+        if user_input.strip():  # Check if input is not empty
             try:
-                # Convert the user input to the format your model expects
-                data = np.array([float(x) for x in user_input.split(",")])
-                prediction = model.predict(data.reshape(1, -1))
-                st.write(f"Prediction: {prediction[0]}")
-            except ValueError:
-                st.error("Please enter valid numerical data separated by commas.")
+                # Preprocess user input
+                processed_input = preprocess_input(user_input)
+                
+                # Make prediction
+                prediction = model.predict(processed_input)
+                
+                st.write(f'Prediction: {prediction[0]}')
+                
+            except Exception as e:
+                st.error(f'Error: {e}')
         else:
-            st.warning("Please enter some data.")
+            st.warning('Please enter some text.')
 
+# Run the app
 if __name__ == '__main__':
     main()
