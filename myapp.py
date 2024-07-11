@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 
 # Load the model
-model = load_model('model.h5')
+model = load_model('finalExam.keras')
 
 # Define your app
 def main():
